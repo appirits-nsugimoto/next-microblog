@@ -2,10 +2,14 @@ import {
   Card,
   CardBody,
   CardFooter,
+  LinkBox,
+  LinkOverlay,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { formatDistanceToNow } from "date-fns";
+import NextLink from "next/link";
 
 type Post = {
   id: number;
@@ -19,16 +23,22 @@ type Props = {
 
 export const Post = ({ post }: Props) => {
   return (
-    <Card>
-      <CardBody>
-        <Text>{post.body}</Text>
-      </CardBody>
-      <CardFooter>
-        <Stack spacing={2} direction="row">
-          <Text>{post.createdAt.toISOString()}</Text>
-          <Text>{post.commentCount} comments</Text>
-        </Stack>
-      </CardFooter>
-    </Card>
+    <LinkBox>
+      <Card>
+        <CardBody>
+          <LinkOverlay as={NextLink} href={`/posts/${post.id}`}>
+            <Text>{post.body}</Text>
+          </LinkOverlay>
+        </CardBody>
+        <CardFooter>
+          <Stack spacing={2} direction="row">
+            <Text>{formatDistanceToNow(post.createdAt)} ago</Text>
+            <Text>
+              <span title="コメント数">💬</span> {post.commentCount}
+            </Text>
+          </Stack>
+        </CardFooter>
+      </Card>
+    </LinkBox>
   );
 };

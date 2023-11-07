@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Providers } from "./Providers";
 import { ChakraLayout } from "./ChakraLayout";
+import { Container } from "@chakra-ui/react";
 
 export const metadata: Metadata = {
   title: "ま",
@@ -16,7 +17,7 @@ export default function RootLayout({
     <html lang="ja">
       <body>
         <Providers>
-          <ChakraLayout>{children}</ChakraLayout>
+          <Container maxW="container.lg">{children}</Container>
         </Providers>
       </body>
     </html>
