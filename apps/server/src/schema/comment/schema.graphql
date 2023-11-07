@@ -1,3 +1,7 @@
+extend type Query {
+  comments(postId: ID!, after: String, first: Int = 32): CommentConnection!
+}
+
 type Comment {
   id: ID!
   body: String!
@@ -25,5 +29,5 @@ input CreateCommentInput {
 }
 
 type CreateCommentPayload {
-  comment: Comment!
+  comment: Comment
 }

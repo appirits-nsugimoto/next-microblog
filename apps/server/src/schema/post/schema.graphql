@@ -1,7 +1,7 @@
 # query
 
 extend type Query {
-  posts(after: String, first: Int): PostConnection!
+  posts(after: String, first: Int = 32): PostConnection!
   post(id: ID!): Post
 }
 
@@ -10,7 +10,7 @@ type Post {
   body: String!
   createdAt: Date!
   updatedAt: Date!
-  comments(after: String, first: Int): CommentConnection!
+  commentCount: Int!
 }
 
 type PostConnection {
@@ -34,5 +34,5 @@ input CreatePostInput {
 }
 
 type CreatePostPayload {
-  post: Post!
+  post: Post
 }

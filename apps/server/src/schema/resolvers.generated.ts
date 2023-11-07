@@ -11,11 +11,12 @@ import { PageInfo } from "./base/resolvers/PageInfo";
 import { Post } from "./post/resolvers/Post";
 import { PostConnection } from "./post/resolvers/PostConnection";
 import { PostEdge } from "./post/resolvers/PostEdge";
+import { comments as Query_comments } from "./comment/resolvers/Query/comments";
 import { post as Query_post } from "./post/resolvers/Query/post";
 import { posts as Query_posts } from "./post/resolvers/Query/posts";
 import { DateResolver } from "graphql-scalars";
 export const resolvers: Resolvers = {
-  Query: { post: Query_post, posts: Query_posts },
+  Query: { comments: Query_comments, post: Query_post, posts: Query_posts },
   Mutation: {
     createComment: Mutation_createComment,
     createPost: Mutation_createPost,

@@ -6,13 +6,14 @@ export const posts: NonNullable<QueryResolvers["posts"]> = async (
   arg,
   _ctx,
 ) => {
-  const limit = Math.min(arg?.first ?? Infinity, 32);
+  const limit = Math.min(arg.first, 32);
   const firstId = cursorToId(arg?.after);
   const posts = await db
     .selectFrom("posts")
     .select(["posts.id", "posts.body", "posts.createdAt", "posts.updatedAt"])
     .limit(limit + 1) // +1 to check if there is a next page
-    .$if(firstId != null, (q) => q.where("id", ">", Number(firstId)))
+    .$if(firstId != null, (q) => q.where("id", "<", Number(firstId)))
+    .orderBy("posts.id desc")
     .execute();
 
   return {

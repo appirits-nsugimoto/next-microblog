@@ -66,7 +66,7 @@ export type CreateCommentInput = {
 
 export type CreateCommentPayload = {
   __typename?: "CreateCommentPayload";
-  comment: Comment;
+  comment?: Maybe<Comment>;
 };
 
 export type CreatePostInput = {
@@ -75,7 +75,7 @@ export type CreatePostInput = {
 
 export type CreatePostPayload = {
   __typename?: "CreatePostPayload";
-  post: Post;
+  post?: Maybe<Post>;
 };
 
 export type Mutation = {
@@ -101,15 +101,10 @@ export type PageInfo = {
 export type Post = {
   __typename?: "Post";
   body: Scalars["String"]["output"];
-  comments: CommentConnection;
+  commentCount: Scalars["Int"]["output"];
   createdAt: Scalars["Date"]["output"];
   id: Scalars["ID"]["output"];
   updatedAt: Scalars["Date"]["output"];
-};
-
-export type PostcommentsArgs = {
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  first?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 export type PostConnection = {
@@ -126,8 +121,15 @@ export type PostEdge = {
 
 export type Query = {
   __typename?: "Query";
+  comments: CommentConnection;
   post?: Maybe<Post>;
   posts: PostConnection;
+};
+
+export type QuerycommentsArgs = {
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  first?: InputMaybe<Scalars["Int"]["input"]>;
+  postId: Scalars["ID"]["input"];
 };
 
 export type QuerypostArgs = {
@@ -255,7 +257,7 @@ export type ResolversTypes = {
   CreateCommentPayload: ResolverTypeWrapper<CreateCommentPayload>;
   CreatePostInput: CreatePostInput;
   CreatePostPayload: ResolverTypeWrapper<
-    Omit<CreatePostPayload, "post"> & { post: ResolversTypes["Post"] }
+    Omit<CreatePostPayload, "post"> & { post?: Maybe<ResolversTypes["Post"]> }
   >;
   Date: ResolverTypeWrapper<Scalars["Date"]["output"]>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -281,7 +283,7 @@ export type ResolversParentTypes = {
   CreateCommentPayload: CreateCommentPayload;
   CreatePostInput: CreatePostInput;
   CreatePostPayload: Omit<CreatePostPayload, "post"> & {
-    post: ResolversParentTypes["Post"];
+    post?: Maybe<ResolversParentTypes["Post"]>;
   };
   Date: Scalars["Date"]["output"];
   Mutation: {};
@@ -335,7 +337,7 @@ export type CreateCommentPayloadResolvers<
   ParentType extends
     ResolversParentTypes["CreateCommentPayload"] = ResolversParentTypes["CreateCommentPayload"],
 > = {
-  comment?: Resolver<ResolversTypes["Comment"], ParentType, ContextType>;
+  comment?: Resolver<Maybe<ResolversTypes["Comment"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -344,7 +346,7 @@ export type CreatePostPayloadResolvers<
   ParentType extends
     ResolversParentTypes["CreatePostPayload"] = ResolversParentTypes["CreatePostPayload"],
 > = {
-  post?: Resolver<ResolversTypes["Post"], ParentType, ContextType>;
+  post?: Resolver<Maybe<ResolversTypes["Post"]>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -392,12 +394,7 @@ export type PostResolvers<
     ResolversParentTypes["Post"] = ResolversParentTypes["Post"],
 > = {
   body?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  comments?: Resolver<
-    ResolversTypes["CommentConnection"],
-    ParentType,
-    ContextType,
-    Partial<PostcommentsArgs>
-  >;
+  commentCount?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
@@ -429,6 +426,12 @@ export type QueryResolvers<
   ParentType extends
     ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
+  comments?: Resolver<
+    ResolversTypes["CommentConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<QuerycommentsArgs, "first" | "postId">
+  >;
   post?: Resolver<
     Maybe<ResolversTypes["Post"]>,
     ParentType,
@@ -439,7 +442,7 @@ export type QueryResolvers<
     ResolversTypes["PostConnection"],
     ParentType,
     ContextType,
-    Partial<QuerypostsArgs>
+    RequireFields<QuerypostsArgs, "first">
   >;
 };
 

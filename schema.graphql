@@ -21,7 +21,7 @@ input CreateCommentInput {
 }
 
 type CreateCommentPayload {
-  comment: Comment!
+  comment: Comment
 }
 
 input CreatePostInput {
@@ -29,7 +29,7 @@ input CreatePostInput {
 }
 
 type CreatePostPayload {
-  post: Post!
+  post: Post
 }
 
 scalar Date
@@ -46,7 +46,7 @@ type PageInfo {
 
 type Post {
   body: String!
-  comments(after: String, first: Int): CommentConnection!
+  commentCount: Int!
   createdAt: Date!
   id: ID!
   updatedAt: Date!
@@ -63,6 +63,7 @@ type PostEdge {
 }
 
 type Query {
+  comments(after: String, first: Int = 32, postId: ID!): CommentConnection!
   post(id: ID!): Post
-  posts(after: String, first: Int): PostConnection!
+  posts(after: String, first: Int = 32): PostConnection!
 }
