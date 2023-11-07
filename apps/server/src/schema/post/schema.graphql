@@ -1,0 +1,38 @@
+# query
+
+extend type Query {
+  posts(after: String, first: Int): PostConnection!
+  post(id: ID!): Post
+}
+
+type Post {
+  id: ID!
+  body: String!
+  createdAt: Date!
+  updatedAt: Date!
+  comments(after: String, first: Int): CommentConnection!
+}
+
+type PostConnection {
+  edges: [PostEdge!]!
+  pageInfo: PageInfo!
+}
+
+type PostEdge {
+  cursor: String!
+  node: Post!
+}
+
+# mutation
+
+extend type Mutation {
+  createPost(input: CreatePostInput!): CreatePostPayload!
+}
+
+input CreatePostInput {
+  body: String!
+}
+
+type CreatePostPayload {
+  post: Post!
+}

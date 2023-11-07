@@ -2,13 +2,20 @@
   "name": "next-microblog",
   "private": true,
   "scripts": {
-    "web": "npm run -w web dev"
+    "web": "npm run -w web dev",
+    "codegen": "graphql-codegen -p server"
   },
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "devDependencies": {
+    "@eddeee888/gcg-typescript-resolver-files": "^0.7.1",
+    "@graphql-codegen/cli": "^5.0.0",
+    "graphql-config": "^5.0.3",
     "prettier": "^3.0.3"
+  },
+  "dependencies": {
+    "graphql-scalars": "^1.22.4"
   }
 }

@@ -1,0 +1,29 @@
+type Comment {
+  id: ID!
+  body: String!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type CommentConnection {
+  edges: [CommentEdge!]!
+  pageInfo: PageInfo!
+}
+
+type CommentEdge {
+  node: Comment!
+  cursor: String!
+}
+
+extend type Mutation {
+  createComment(input: CreateCommentInput!): CreateCommentPayload!
+}
+
+input CreateCommentInput {
+  postId: ID!
+  body: String!
+}
+
+type CreateCommentPayload {
+  comment: Comment!
+}
