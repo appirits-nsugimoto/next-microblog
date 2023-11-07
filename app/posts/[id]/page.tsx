@@ -43,10 +43,6 @@ export default async function Page({ params }: Props) {
   const { post, comments } = await fetchPostWithComments(params.id);
   return (
     <Stack spacing={4} direction="column">
-      <Heading>
-        <NextLink href="/">&lt;</NextLink>
-        Post
-      </Heading>
       {/* post */}
       <Card>
         <CardBody>
