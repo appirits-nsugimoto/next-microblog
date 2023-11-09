@@ -1,46 +1,60 @@
-import { db } from "@/src/database";
+import { graphql } from "@/src/gql";
+import { graphqlClient } from "@/src/graphql-client";
 import {
   Box,
   Card,
   CardBody,
   CardFooter,
   Divider,
-  Heading,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { formatDistance, formatDistanceToNow, formatISO } from "date-fns";
-import NextLink from "next/link";
-import { CommentForm } from "./CommentForm";
+import { formatDistance, formatISO } from "date-fns";
 import { Fragment } from "react";
+import { CommentForm } from "./CommentForm";
 
-const fetchPostWithComments = async (id: number) => {
-  const postPromise = db
-    .selectFrom("posts")
-    .where("posts.id", "=", id)
-    .select(["posts.id", "posts.body", "posts.createdAt"])
-    .leftJoin("comments", "posts.id", "comments.postId")
-    .select(({ fn }) => [fn.count<number>("comments.id").as("commentCount")])
-    .groupBy("posts.id")
-    .executeTakeFirstOrThrow();
+const query = graphql(`
+  query PostWithComments($id: ID!) {
+    post(id: $id) {
+      id
+      body
+      createdAt
+      commentCount
+    }
+    comments(postId: $id) {
+      edges {
+        node {
+          id
+          body
+          createdAt
+        }
+      }
+    }
+  }
+`);
 
-  const commentsPromise = db
-    .selectFrom("comments")
-    .where("comments.postId", "=", id)
-    .select(["comments.id", "comments.body", "comments.createdAt"])
-    .orderBy("comments.id asc")
-    .limit(10)
-    .execute();
+const fetchPostWithComments = async (id: string) => {
+  const result = await graphqlClient.request(query, { id });
 
-  const [post, comments] = await Promise.all([postPromise, commentsPromise]);
+  const post = result.post;
+  const comments = result.comments.edges
+    .flatMap((edge) => edge.node)
+    .filter(notNull);
   return { post, comments };
 };
 
+function notNull<T>(value?: T | null): value is T {
+  return value != null;
+}
+
 type Props = {
-  params: { id: number };
+  params: { id: string };
 };
 export default async function Page({ params }: Props) {
   const { post, comments } = await fetchPostWithComments(params.id);
+  if (!post) {
+    return <div>not found</div>;
+  }
   return (
     <Stack spacing={4} direction="column">
       {/* post */}
@@ -50,7 +64,7 @@ export default async function Page({ params }: Props) {
         </CardBody>
         <CardFooter>
           <Stack spacing={2} direction="row">
-            <Text>{formatISO(post.createdAt)}</Text>
+            <Text>{formatISO(new Date(post.createdAt))}</Text>
             <Text>
               <span title="コメント数">💬</span> {post.commentCount}
             </Text>
@@ -68,7 +82,9 @@ export default async function Page({ params }: Props) {
             {i !== 0 && <Divider />}
             <Box key={comment.id}>
               <Text>{comment.body}</Text>
-              <Text>{formatDistance(comment.createdAt, new Date())} ago</Text>
+              <Text>
+                {formatDistance(new Date(comment.createdAt), new Date())} ago
+              </Text>
             </Box>
           </Fragment>
         ))}

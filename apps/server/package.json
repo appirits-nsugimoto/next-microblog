@@ -2,7 +2,7 @@
   "name": "server",
   "private": true,
   "scripts": {
-    "codegen": "graphql-codegen",
+    "codegen": "graphql-codegen -p server",
     "dev": "dotenv -c $NODE_ENV -- tsx watch ./src/server.ts",
     "kysely-codegen": "dotenv -c $NODE_ENV -- kysely-codegen --camel-case"
   },

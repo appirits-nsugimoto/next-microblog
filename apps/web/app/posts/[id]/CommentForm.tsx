@@ -6,7 +6,7 @@ import { Button, Input, Stack } from "@chakra-ui/react";
 import { useFormStatus } from "react-dom";
 
 type Props = {
-  postId: number;
+  postId: string;
 };
 export const CommentForm = ({ postId }: Props) => {
   const formRef = useRef<HTMLFormElement>(null);

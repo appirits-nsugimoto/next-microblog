@@ -1,20 +1,29 @@
-import { db } from "@/src/database";
-import { Box, Button, Input, Stack } from "@chakra-ui/react";
+import { graphql } from "@/src/gql";
+import { graphqlClient } from "@/src/graphql-client";
+import { Box, Stack } from "@chakra-ui/react";
 import { Post } from "./Post";
-import { createPost } from "./actions";
+
+const query = graphql(`
+  query Posts {
+    posts {
+      edges {
+        node {
+          id
+          ...PostListItem
+        }
+      }
+    }
+  }
+`);
 
 const fetchPosts = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  return db
-    .selectFrom("posts")
-    .leftJoin("comments", "posts.id", "comments.postId")
-    .select(["posts.id", "posts.body", "posts.createdAt"])
-    .select(({ fn }) => [fn.count<number>("comments.id").as("commentCount")])
-    .groupBy("posts.id")
-    .orderBy("posts.id desc")
-    .limit(10)
-    .execute();
+  const result = await graphqlClient.request(query);
+  return result.posts.edges.flatMap((edge) => edge.node).filter(notNull);
 };
+
+function notNull<T>(value: T | null): value is T {
+  return value !== null;
+}
 
 export const Posts = async () => {
   const posts = await fetchPosts();

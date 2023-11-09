@@ -1,9 +1,9 @@
 "use client";
 
+import { Button, Input, Stack } from "@chakra-ui/react";
 import { PropsWithChildren, useRef } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { createPost } from "./actions";
-import { Stack, Input, Button } from "@chakra-ui/react";
 
 export const PostForm = () => {
   const formRef = useRef<HTMLFormElement>(null);

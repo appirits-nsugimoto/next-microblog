@@ -6,22 +6,26 @@ import {
   LinkOverlay,
   Stack,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { formatDistanceToNow } from "date-fns";
 import NextLink from "next/link";
+import { FragmentType, graphql, useFragment } from "@/src/gql";
 
-type Post = {
-  id: number;
-  body: string;
-  createdAt: Date;
-  commentCount: number;
-};
+const PostFragment = graphql(`
+  fragment PostListItem on Post {
+    id
+    body
+    createdAt
+    commentCount
+  }
+`);
+
 type Props = {
-  post: Post;
+  post: FragmentType<typeof PostFragment>;
 };
 
-export const Post = ({ post }: Props) => {
+export const Post = ({ post: fragment }: Props) => {
+  const post = useFragment(PostFragment, fragment);
   return (
     <LinkBox>
       <Card>
@@ -32,7 +36,7 @@ export const Post = ({ post }: Props) => {
         </CardBody>
         <CardFooter>
           <Stack spacing={2} direction="row">
-            <Text>{formatDistanceToNow(post.createdAt)} ago</Text>
+            <Text>{formatDistanceToNow(new Date(post.createdAt))} ago</Text>
             <Text>
               <span title="コメント数">💬</span> {post.commentCount}
             </Text>

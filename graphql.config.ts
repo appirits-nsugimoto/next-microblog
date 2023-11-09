@@ -18,6 +18,19 @@ const config: IGraphQLConfig = {
     },
     web: {
       schema: "./schema.graphql",
+      documents: "./apps/web/{app,src}/**/*.{ts,tsx}",
+      extensions: {
+        codegen: {
+          generates: {
+            "apps/web/src/gql/": {
+              preset: "client",
+              config: {
+                scalars: { Date: "string", DateTime: "string" },
+              },
+            },
+          },
+        },
+      },
     },
   },
 };
