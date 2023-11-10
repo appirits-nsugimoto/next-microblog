@@ -4,7 +4,8 @@
   "scripts": {
     "codegen": "graphql-codegen -p server",
     "dev": "dotenv -c $NODE_ENV -- tsx watch ./src/server.ts",
-    "kysely-codegen": "dotenv -c $NODE_ENV -- kysely-codegen --camel-case"
+    "kysely-codegen": "dotenv -c $NODE_ENV -- kysely-codegen --camel-case",
+    "migrate": "dotenv -c $NODE_ENV -- tsx ./migrate.ts"
   },
   "dependencies": {
     "dataloader": "^2.2.2",
@@ -14,6 +15,7 @@
   "devDependencies": {
     "@eddeee888/gcg-typescript-resolver-files": "^0.7.1",
     "@graphql-codegen/cli": "^5.0.0",
+    "@types/node": "^20.9.0",
     "dotenv-cli": "^7.3.0",
     "kysely-codegen": "^0.11.0",
     "tsx": "^3.14.0"

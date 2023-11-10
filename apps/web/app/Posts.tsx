@@ -1,6 +1,6 @@
 import { graphql } from "@/src/gql";
 import { graphqlClient } from "@/src/graphql-client";
-import { Box, Stack } from "@chakra-ui/react";
+import { Box, Stack, Text } from "@chakra-ui/react";
 import { Post } from "./Post";
 
 const query = graphql(`
@@ -27,6 +27,13 @@ function notNull<T>(value: T | null): value is T {
 
 export const Posts = async () => {
   const posts = await fetchPosts();
+  if (posts.length === 0) {
+    return (
+      <Box>
+        <Text>まだない</Text>
+      </Box>
+    );
+  }
   return (
     <Stack spacing={4} direction="row" flexWrap="wrap">
       {posts.map((post) => (
