@@ -13,6 +13,7 @@ services:
     image: node:20
     command: sh -c 'npm i -w server && npm --workspace=server run dev'
     environment:
+      PORT: 8787
       DATABASE_URL: postgres://postgres:postgres@db/postgres
     volumes:
       - node_modules:/app/node_modules
@@ -26,7 +27,7 @@ services:
       - "3000:3000"
     command: sh -c 'npm i -w web && npm --workspace=web run dev'
     environment:
-      GRAPHQL_URL: http://server:8080/graphql
+      GRAPHQL_URL: http://server:8787/graphql
     depends_on:
       - server
 

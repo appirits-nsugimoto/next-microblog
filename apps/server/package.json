@@ -5,19 +5,24 @@
     "codegen": "graphql-codegen -p server",
     "dev": "dotenv -c $NODE_ENV -- tsx watch ./src/server.ts",
     "kysely-codegen": "dotenv -c $NODE_ENV -- kysely-codegen --camel-case",
-    "migrate": "dotenv -c $NODE_ENV -- tsx ./migrate.ts"
+    "migrate": "dotenv -c $NODE_ENV -- tsx ./migrate.ts",
+    "build": "esbuild src/server.ts --bundle --minify --outfile=build/server.js --platform=node --target=node18 --external:pg"
   },
   "dependencies": {
     "dataloader": "^2.2.2",
     "graphql-yoga": "^5.0.0",
-    "kysely": "^0.26.3"
+    "kysely": "^0.26.3",
+    "pg": "^8.11.3"
   },
   "devDependencies": {
     "@eddeee888/gcg-typescript-resolver-files": "^0.7.1",
     "@graphql-codegen/cli": "^5.0.0",
     "@types/node": "^20.9.0",
+    "@types/pg": "^8.10.9",
     "dotenv-cli": "^7.3.0",
+    "esbuild": "^0.19.5",
     "kysely-codegen": "^0.11.0",
-    "tsx": "^3.14.0"
+    "tsx": "^3.14.0",
+    "wrangler": "^3.15.0"
   }
 }
