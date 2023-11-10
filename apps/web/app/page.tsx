@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <Stack spacing={4} direction="column">
       <PostForm />
-      <Suspense fallback={<Progress>Loading...</Progress>}>
+      <Suspense fallback={<Progress isIndeterminate>Loading...</Progress>}>
         <Posts />
       </Suspense>
     </Stack>
