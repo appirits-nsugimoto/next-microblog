@@ -14,15 +14,15 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: string; output: string; }
+  DateTime: { input: string; output: string; }
 };
 
 export type Comment = {
   __typename?: 'Comment';
   body: Scalars['String']['output'];
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
-  updatedAt: Scalars['Date']['output'];
+  updatedAt: Scalars['DateTime']['output'];
 };
 
 export type CommentConnection = {
@@ -82,9 +82,9 @@ export type Post = {
   __typename?: 'Post';
   body: Scalars['String']['output'];
   commentCount: Scalars['Int']['output'];
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
-  updatedAt: Scalars['Date']['output'];
+  updatedAt: Scalars['DateTime']['output'];
 };
 
 export type PostConnection = {

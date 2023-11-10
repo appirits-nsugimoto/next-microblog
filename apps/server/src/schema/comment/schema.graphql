@@ -5,8 +5,8 @@ extend type Query {
 type Comment {
   id: ID!
   body: String!
-  createdAt: Date!
-  updatedAt: Date!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type CommentConnection {

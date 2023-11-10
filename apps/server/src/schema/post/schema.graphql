@@ -8,8 +8,8 @@ extend type Query {
 type Post {
   id: ID!
   body: String!
-  createdAt: Date!
-  updatedAt: Date!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   commentCount: Int!
 }
 

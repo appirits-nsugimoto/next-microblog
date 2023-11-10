@@ -36,15 +36,15 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  Date: { input: Date | string; output: Date | string };
+  DateTime: { input: Date | string; output: Date | string };
 };
 
 export type Comment = {
   __typename?: "Comment";
   body: Scalars["String"]["output"];
-  createdAt: Scalars["Date"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
   id: Scalars["ID"]["output"];
-  updatedAt: Scalars["Date"]["output"];
+  updatedAt: Scalars["DateTime"]["output"];
 };
 
 export type CommentConnection = {
@@ -102,9 +102,9 @@ export type Post = {
   __typename?: "Post";
   body: Scalars["String"]["output"];
   commentCount: Scalars["Int"]["output"];
-  createdAt: Scalars["Date"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
   id: Scalars["ID"]["output"];
-  updatedAt: Scalars["Date"]["output"];
+  updatedAt: Scalars["DateTime"]["output"];
 };
 
 export type PostConnection = {
@@ -259,7 +259,7 @@ export type ResolversTypes = {
   CreatePostPayload: ResolverTypeWrapper<
     Omit<CreatePostPayload, "post"> & { post?: Maybe<ResolversTypes["Post"]> }
   >;
-  Date: ResolverTypeWrapper<Scalars["Date"]["output"]>;
+  DateTime: ResolverTypeWrapper<Scalars["DateTime"]["output"]>;
   Mutation: ResolverTypeWrapper<{}>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
@@ -285,7 +285,7 @@ export type ResolversParentTypes = {
   CreatePostPayload: Omit<CreatePostPayload, "post"> & {
     post?: Maybe<ResolversParentTypes["Post"]>;
   };
-  Date: Scalars["Date"]["output"];
+  DateTime: Scalars["DateTime"]["output"];
   Mutation: {};
   PageInfo: PageInfo;
   Boolean: Scalars["Boolean"]["output"];
@@ -302,9 +302,9 @@ export type CommentResolvers<
     ResolversParentTypes["Comment"] = ResolversParentTypes["Comment"],
 > = {
   body?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -350,9 +350,9 @@ export type CreatePostPayloadResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface DateScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["Date"], any> {
-  name: "Date";
+export interface DateTimeScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["DateTime"], any> {
+  name: "DateTime";
 }
 
 export type MutationResolvers<
@@ -395,9 +395,9 @@ export type PostResolvers<
 > = {
   body?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   commentCount?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  updatedAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -452,7 +452,7 @@ export type Resolvers<ContextType = any> = {
   CommentEdge?: CommentEdgeResolvers<ContextType>;
   CreateCommentPayload?: CreateCommentPayloadResolvers<ContextType>;
   CreatePostPayload?: CreatePostPayloadResolvers<ContextType>;
-  Date?: GraphQLScalarType;
+  DateTime?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;

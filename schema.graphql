@@ -1,8 +1,8 @@
 type Comment {
   body: String!
-  createdAt: Date!
+  createdAt: DateTime!
   id: ID!
-  updatedAt: Date!
+  updatedAt: DateTime!
 }
 
 type CommentConnection {
@@ -32,7 +32,7 @@ type CreatePostPayload {
   post: Post
 }
 
-scalar Date
+scalar DateTime
 
 type Mutation {
   createComment(input: CreateCommentInput!): CreateCommentPayload!
@@ -47,9 +47,9 @@ type PageInfo {
 type Post {
   body: String!
   commentCount: Int!
-  createdAt: Date!
+  createdAt: DateTime!
   id: ID!
-  updatedAt: Date!
+  updatedAt: DateTime!
 }
 
 type PostConnection {

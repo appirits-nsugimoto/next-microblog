@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "web": "npm run -w web dev",
-    "codegen": "graphql-codegen -p web -p server"
+    "codegen": "graphql-codegen"
   },
   "workspaces": [
     "apps/*",
