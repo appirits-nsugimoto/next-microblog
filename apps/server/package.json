@@ -6,7 +6,8 @@
     "dev": "dotenv -c $NODE_ENV -- tsx watch ./src/server.ts",
     "kysely-codegen": "dotenv -c $NODE_ENV -- kysely-codegen --camel-case",
     "migrate": "dotenv -c $NODE_ENV -- tsx ./migrate.ts",
-    "build": "esbuild src/server.ts --bundle --minify --outfile=build/server.js --platform=node --target=node18 --external:pg"
+    "build": "dotenv -c production -- esbuild src/server.ts --bundle --minify --outfile=build/server.js --platform=node --target=node18 --external:pg",
+    "start": "node build/server.js"
   },
   "dependencies": {
     "dataloader": "^2.2.2",
